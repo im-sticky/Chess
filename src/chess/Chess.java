@@ -25,6 +25,7 @@ public class Chess {
     private JLabel[][] squareLabels;
     private Color[] squareColors = {Color.white, Color.LIGHT_GRAY};
     private int movingFlag;
+    private int selectedFlag;
     private JLabel movingPiece;
     private int[] previousSquare = {0, 0};
     private int[] previousHoverSquare = {0, 0};
@@ -138,8 +139,10 @@ public class Chess {
                                 if (movingFlag==0) {
                                     if (squareLabels[i][j]==tempLabel) {
                                         movingPiece.setIcon(tempLabel.getIcon());
+                                        squares[i][j].setBackground(Color.GREEN);                                      
                                         previousSquare[0]=i;
-                                        previousSquare[1]=j;   
+                                        previousSquare[1]=j;
+                                        selectedFlag++;
                                         movingFlag++;
                                     }
                                 }
@@ -148,7 +151,9 @@ public class Chess {
                                     if (squareLabels[i][j]==tempLabel) {
                                         squareLabels[i][j].setIcon(movingPiece.getIcon());
                                         ImageIcon tempIcon = new ImageIcon(getClass().getResource("/pieces/blank.png"));
-                                        squareLabels[previousSquare[0]][previousSquare[1]].setIcon(tempIcon);
+                                        squareLabels[previousSquare[0]][previousSquare[1]].setIcon(tempIcon);                                      
+                                        squares[previousSquare[0]][previousSquare[1]].setBackground(squareColors[(previousSquare[0]+previousSquare[1])%2]);
+                                        selectedFlag--;
                                         movingFlag--;
                                     }
                                 }
@@ -166,12 +171,21 @@ public class Chess {
                         for (int i=0; i<8; i++) {
                             for (int j=0; j<8; j++) {
                                 if (squares[i][j]==tempPanel) {
-                                    squares[i][j].setBackground(Color.CYAN);
-                                    previousHoverSquare[0]=i;
-                                    previousHoverSquare[1]=j;
+                                    if (selectedFlag==0) {
+                                        squares[i][j].setBackground(Color.CYAN);
+                                        previousHoverSquare[0]=i;
+                                        previousHoverSquare[1]=j;
+                                    }
+                                    
+                                    else if (squares[i][j]!=squares[previousSquare[0]][previousSquare[1]]) {
+                                        squares[i][j].setBackground(Color.CYAN);
+                                        previousHoverSquare[0]=i;
+                                        previousHoverSquare[1]=j;
+                                    }
                                 }
                             }
                         }
+                        
                     }
                     
                     public void mouseExited (MouseEvent e) {
@@ -184,7 +198,13 @@ public class Chess {
                         for (int i=0; i<8; i++) {
                             for (int j=0; j<8; j++) {
                                 if (squares[i][j]==tempPanel) {
-                                    squares[previousHoverSquare[0]][previousHoverSquare[1]].setBackground(squareColors[(i+j)%2]);
+                                    if (selectedFlag==0) {
+                                        squares[previousHoverSquare[0]][previousHoverSquare[1]].setBackground(squareColors[(i+j)%2]);
+                                    }
+                                    
+                                    else if (squares[i][j]!=squares[previousSquare[0]][previousSquare[1]]) {
+                                        squares[previousHoverSquare[0]][previousHoverSquare[1]].setBackground(squareColors[(i+j)%2]);
+                                    }
                                 }
                             }
                         }
@@ -199,9 +219,17 @@ public class Chess {
                         for (int i=0; i<8; i++) {
                             for (int j=0; j<8; j++) {
                                 if (squares[i][j]==tempPanel) {
-                                    squares[i][j].setBackground(Color.CYAN);
-                                    previousHoverSquare[0]=i;
-                                    previousHoverSquare[1]=j;
+                                    if (selectedFlag==0) {
+                                        squares[i][j].setBackground(Color.CYAN);
+                                        previousHoverSquare[0]=i;
+                                        previousHoverSquare[1]=j;
+                                    }
+                                    
+                                    else if (squares[i][j]!=squares[previousSquare[0]][previousSquare[1]]) {
+                                        squares[i][j].setBackground(Color.CYAN);
+                                        previousHoverSquare[0]=i;
+                                        previousHoverSquare[1]=j;
+                                    }
                                 }
                             }
                         }
@@ -214,7 +242,13 @@ public class Chess {
                         for (int i=0; i<8; i++) {
                             for (int j=0; j<8; j++) {
                                 if (squares[i][j]==tempPanel) {
-                                    squares[previousHoverSquare[0]][previousHoverSquare[1]].setBackground(squareColors[(i+j)%2]);
+                                    if (selectedFlag==0) {
+                                        squares[previousHoverSquare[0]][previousHoverSquare[1]].setBackground(squareColors[(i+j)%2]);
+                                    }
+                                    
+                                    else if (squares[i][j]!=squares[previousSquare[0]][previousSquare[1]]) {
+                                        squares[previousHoverSquare[0]][previousHoverSquare[1]].setBackground(squareColors[(i+j)%2]);
+                                    }
                                 }
                             }
                         }
@@ -224,7 +258,7 @@ public class Chess {
         }
     }
     
-    public static void main(String[] args) {  
+    public static void main(String[] args) {
        Chess c = new Chess();
     }
 }
