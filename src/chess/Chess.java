@@ -149,13 +149,21 @@ public class Chess {
                                     
                                 else {
                                     if (squareLabels[i][j]==tempLabel) {
-                                        squareLabels[i][j].setIcon(movingPiece.getIcon());
-                                        ImageIcon tempIcon = new ImageIcon(getClass().getResource("/pieces/blank.png"));
-                                        squareLabels[previousSquare[0]][previousSquare[1]].setIcon(tempIcon);                                      
-                                        squares[previousSquare[0]][previousSquare[1]].setBackground(squareColors[(previousSquare[0]+previousSquare[1])%2]);
-                                        selectedFlag--;
-                                        movingFlag--;
-                                    }
+                                        if (squareLabels[i][j]!=squareLabels[previousSquare[0]][previousSquare[1]]) {
+                                            squareLabels[i][j].setIcon(movingPiece.getIcon());
+                                            ImageIcon tempIcon = new ImageIcon(getClass().getResource("/pieces/blank.png"));
+                                            squareLabels[previousSquare[0]][previousSquare[1]].setIcon(tempIcon);                                      
+                                            squares[previousSquare[0]][previousSquare[1]].setBackground(squareColors[(previousSquare[0]+previousSquare[1])%2]);
+                                            selectedFlag--;
+                                            movingFlag--;
+                                        }
+                                        
+                                        else {
+                                            squares[previousSquare[0]][previousSquare[1]].setBackground(squareColors[(previousSquare[0]+previousSquare[1])%2]);
+                                            selectedFlag--;
+                                            movingFlag--;
+                                        }
+                                    }                                                                     
                                 }
                             }
                         }           
